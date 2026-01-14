@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: #050000;
+  --color-foreground: #ff3333;
+
+  --color-card: #121212;
+  --color-card-foreground: #ff3333;
+
+  --color-popover: #121212;
+  --color-popover-foreground: #ff3333;
+
+  --color-primary: #ff0000;
+  --color-primary-foreground: #050000;
+
+  --color-secondary: #1a1a1a;
+  --color-secondary-foreground: #8b0000;
+
+  --color-muted: #121212;
+  --color-muted-foreground: #660000;
+
+  --color-accent: #ff0000;
+  --color-accent-foreground: #050000;
+
+  --color-destructive: #7f1d1d;
+  --color-destructive-foreground: #fafafa;
+
+  --color-border: #ff0000;
+  --color-input: #222222;
+  --color-ring: #ff0000;
+
+  --color-chart-1: #ff0000;
+  --color-chart-2: #8b0000;
+  --color-chart-3: #660000;
+  --color-chart-4: #440000;
+  --color-chart-5: #220000;
+
+  --color-sidebar: #0a0000;
+  --color-sidebar-foreground: #ff3333;
+  --color-sidebar-primary: #ff0000;
+  --color-sidebar-primary-foreground: #050000;
+  --color-sidebar-accent: #1a1a1a;
+  --color-sidebar-accent-foreground: #ff0000;
+  --color-sidebar-border: #222222;
+  --color-sidebar-ring: #ff0000;
+
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
+
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --animate-flicker: flicker 0.15s infinite;
+  --animate-scanline: scanline 8s linear infinite;
+  --animate-pulse-red: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes flicker {
+    0% { opacity: 0.97; }
+    5% { opacity: 0.95; }
+    10% { opacity: 0.9; }
+    15% { opacity: 0.95; }
+    20% { opacity: 0.98; }
+    25% { opacity: 0.95; }
+    30% { opacity: 0.9; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+
+  @keyframes pulse-red {
+    0%, 100% { opacity: 1; filter: drop-shadow(0 0 2px #ff0000); }
+    50% { opacity: 0.5; filter: drop-shadow(0 0 8px #ff0000); }
+  }
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border);
+    border-radius: 0 !important;
+  }
+
+  :root {
+    --background: #050000;
+    --foreground: #ff3333;
+    --card: #121212;
+    --card-foreground: #ff3333;
+    --popover: #121212;
+    --popover-foreground: #ff3333;
+    --primary: #ff0000;
+    --primary-foreground: #050000;
+    --secondary: #1a1a1a;
+    --secondary-foreground: #8b0000;
+    --muted: #121212;
+    --muted-foreground: #660000;
+    --accent: #ff0000;
+    --accent-foreground: #050000;
+    --destructive: #7f1d1d;
+    --destructive-foreground: #fafafa;
+    --border: #ff0000;
+    --input: #222222;
+    --ring: #ff0000;
+    --radius: 0px;
+  }
+}
+
+@layer base {
+  html {
+    background-color: var(--color-background);
+    cursor: crosshair;
+  }
+
+  body {
+    @apply bg-background text-foreground font-mono antialiased;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    z-index: 9999;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold uppercase tracking-widest;
+    color: var(--color-primary);
+  }
+
+  .container {
+    @apply mx-auto px-5;
+    max-width: 1440px;
+  }
+
+  .terminal-text {
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+  }
+
+  .panel-frame {
+    border: 1px solid var(--color-border);
+    background: var(--color-card);
+    position: relative;
+  }
+
+  .panel-header {
+    @apply flex items-center justify-between px-3 py-1 border-b border-border bg-black/40;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .status-led {
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary);
+    @apply animate-pulse-red;
+  }
+
+  button {
+    @apply uppercase font-bold transition-all duration-75 border border-border px-4 py-1;
+    font-size: 10px;
+    background: transparent;
+  }
+
+  button:hover {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+    box-shadow: 0 0 10px var(--color-primary);
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #050000;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #ff0000;
+  }
+}
+
+@layer utilities {
+  .crt-flicker {
+    @apply animate-flicker;
+  }
+  
+  .scanline-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    z-index: 10000;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+    @apply animate-scanline;
+    pointer-events: none;
+  }
+}
